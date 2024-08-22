@@ -1,35 +1,36 @@
-h1 {
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: Fugue-Regular;
-    padding-left: 60px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-.bar {
-    transition: height 0.3s;
+#title-container {
+    margin-top: 50px;
 }
 
-.bar:hover {
-    opacity: 0.8;
+#legend {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.label {
-    font-size: 12px;
-    text-anchor: middle;
-    font-family: Fugue-Regular;
+#chart-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os donuts sejam distribuídos em várias linhas */
+    justify-content: center; /* Centraliza os donuts horizontalmente */
+    align-content: center; /* Centraliza os donuts verticalmente dentro do container */
+    width: 80%; /* Ajuste conforme necessário */
+    max-width: 1200px; /* Define uma largura máxima para o container */
+    height: 80vh; /* Ajuste conforme necessário */
 }
 
-.axis-label {
-    font-size: 14px;
-    font-weight: bold;
-    font-family: Fugue-Regular;
+svg {
+    margin: 10px; /* Espaçamento entre os gráficos */
 }
 
-#tooltip {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 12px;
-    display: none;
-    pointer-events: none;
-    font-family: Fugue-Regular;
-}
+
+

@@ -6,84 +6,88 @@ fetch(csv)
         const rows = data.trim().split("\n").slice(1);
         const cursos = rows.map(row => {
             const [nome, qtMat, percFem, percMasc] = row.split(",");
-            return { nome, qtMat: +qtMat, percFem: +percFem, percMasc: +percMasc };
+            return { nome, percFem: +percFem, percMasc: +percMasc };
         });
 
-        const svg = document.getElementById("chart");
-        const tooltip = document.getElementById("tooltip");
-        const width = svg.getAttribute("width");
-        const height = svg.getAttribute("height");
-        const barWidth = width / cursos.length / 2;
-        const maxHeight = height - 40;
+        const width = 200; // Largura de cada gráfico donut
+        const height = 200; // Altura de cada gráfico donut
+        const radius = Math.min(width, height) / 2;
+        const colorScale = d3.scaleOrdinal(["#362FD9", "#1AACAC"]); // Cores para feminino e masculino
 
-        cursos.forEach((curso, i) => {
-            const x = i * barWidth * 2 + barWidth / 2;
+        const svgContainer = d3.select("#chart-container");
 
-            // Barra feminina
-            const femHeight = (curso.percFem / 100) * maxHeight;
-            const femBar = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            femBar.setAttribute("x", x);
-            femBar.setAttribute("y", height - femHeight);
-            femBar.setAttribute("width", barWidth / 2);
-            femBar.setAttribute("height", femHeight);
-            femBar.setAttribute("fill", "#362FD9");
-            femBar.classList.add("bar");
-            femBar.addEventListener("mouseover", () => {
-                tooltip.style.display = "block";
-                tooltip.textContent = `${curso.percFem.toFixed(2)}% mulheres`;
-            });
-            femBar.addEventListener("mousemove", (event) => {
-                tooltip.style.left = event.pageX + 10 + "px";
-                tooltip.style.top = event.pageY + 10 + "px";
-            });
-            femBar.addEventListener("mouseout", () => {
-                tooltip.style.display = "none";
-            });
-            svg.appendChild(femBar);
+        cursos.forEach(curso => {
+            const svg = svgContainer.append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-            // Barra masculina
-            const mascHeight = (curso.percMasc / 100) * maxHeight;
-            const mascBar = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            mascBar.setAttribute("x", x + barWidth / 2);
-            mascBar.setAttribute("y", height - mascHeight);
-            mascBar.setAttribute("width", barWidth / 2);
-            mascBar.setAttribute("height", mascHeight);
-            mascBar.setAttribute("fill", "#1AACAC");
-            mascBar.classList.add("bar");
-            mascBar.addEventListener("mouseover", () => {
-                tooltip.style.display = "block";
-                tooltip.textContent = `${curso.percMasc.toFixed(2)}% homens`;
-            });
-            mascBar.addEventListener("mousemove", (event) => {
-                tooltip.style.left = event.pageX + 10 + "px";
-                tooltip.style.top = event.pageY + 10 + "px";
-            });
-            mascBar.addEventListener("mouseout", () => {
-                tooltip.style.display = "none";
-            });
-            svg.appendChild(mascBar);
+            const pie = d3.pie()
+                .value(d => d.value)
+                .sort(null);
 
-            // Nome do curso
-            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            label.setAttribute("x", x + barWidth / 2);
-            label.setAttribute("y", height - 5);
-            label.classList.add("label");
-            label.textContent = curso.nome.split(" - ")[0];
-            svg.appendChild(label);
+            const arc = d3.arc()
+                .outerRadius(radius - 10)
+                .innerRadius(radius - 50);
+
+            const data = [
+                { name: "Mulheres", value: curso.percFem },
+                { name: "Homens", value: curso.percMasc }
+            ];
+
+            const arcs = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
+
+            arcs.append("path")
+                .attr("d", arc)
+                .attr("fill", d => colorScale(d.data.name))
+                .on("mouseover", function(event, d) {
+                    d3.select("#tooltip")
+                        .style("display", "block")
+                        .text(`${d.data.name}: ${d.data.value.toFixed(2)}%`)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
+                })
+                .on("mousemove", function(event) {
+                    d3.select("#tooltip")
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
+                })
+                .on("mouseout", function() {
+                    d3.select("#tooltip").style("display", "none");
+                });
+
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("y", height / 2 - radius - 10)
+                .text(curso.nome);
         });
 
-        // Labels dos eixos
-        const femLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        femLabel.setAttribute("x", width / 4);
-        femLabel.setAttribute("y", 50);
-        femLabel.classList.add("axis-label");
-        femLabel.textContent = "MULHERES (%)";
-        svg.appendChild(femLabel);
+        // Adicionar legenda
+        const legendContainer = d3.select("#legend");
 
-        const mascLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        mascLabel.setAttribute("x", (3 * width) / 4);
-        mascLabel.setAttribute("y", 50);
-        mascLabel.classList.add("axis-label");
-        mascLabel.textContent = "HOMENS (%)";
-        svg.appendChild(mascLabel);
+        const legendItems = [
+            { color: "#362FD9", label: "MULHERES" },
+            { color: "#1AACAC", label: "HOMENS" }
+        ];
+
+        legendItems.forEach(item => {
+            const legendItem = legendContainer.append("div")
+                .attr("class", "legend-item");
+
+            legendItem.append("div")
+                .attr("class", "legend-color")
+                .style("background-color", item.color);
+
+            legendItem.append("span")
+                .attr("class", "legend-text")
+                .text(item.label);
+        });
     });
+
+
+
+
