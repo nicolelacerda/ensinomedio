@@ -1,15 +1,20 @@
+html, body {
+    height: 100%; /* Garante que o body ocupe toda a altura da página */
+    margin: 0;
+    padding: 0;
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
     font-family: Fugue-Regular;
-    margin: 0;
-    padding: 0;
     text-align: center;
 }
 
 #title-container {
-    margin-top: 50px;
+    margin-bottom: 20px; /* Espaço abaixo do título */
 }
 
 #legend {
@@ -18,19 +23,29 @@ body {
     margin: 20px 0;
 }
 
-#chart-container {
+#charts-wrapper {
     display: flex;
-    flex-wrap: wrap; /* Permite que os donuts sejam distribuídos em várias linhas */
+    flex-direction: column;
+    align-items: center; /* Centraliza os blocos horizontalmente */
+    width: 100%; /* Ajusta a largura para 100% do contêiner pai */
+    max-width: 1200px; /* Define uma largura máxima para o wrapper */
+    margin: 0 auto; /* Centraliza o wrapper horizontalmente */
+}
+
+.chart-row {
+    display: flex;
     justify-content: center; /* Centraliza os donuts horizontalmente */
-    align-content: center; /* Centraliza os donuts verticalmente dentro do container */
-    width: 80%; /* Ajuste conforme necessário */
-    max-width: 1200px; /* Define uma largura máxima para o container */
-    height: 80vh; /* Ajuste conforme necessário */
+    flex-wrap: wrap; /* Permite que os donuts se distribuam em várias linhas se necessário */
+    margin: 10px 0;
+    width: 100%; /* Ajusta a largura para 100% do contêiner pai */
 }
 
 svg {
-    margin: 10px; /* Espaçamento entre os gráficos */
+    width: 250px; /* Aumenta a largura dos gráficos */
+    height: 250px; /* Aumenta a altura dos gráficos */
+    margin: 15px; /* Espaçamento entre os gráficos */
 }
+
 
 
 

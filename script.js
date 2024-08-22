@@ -9,15 +9,16 @@ fetch(csv)
             return { nome, percFem: +percFem, percMasc: +percMasc };
         });
 
-        const width = 200; // Largura de cada gráfico donut
-        const height = 200; // Altura de cada gráfico donut
+        const width = 250; // Largura de cada gráfico donut
+        const height = 250; // Altura de cada gráfico donut
         const radius = Math.min(width, height) / 2;
         const colorScale = d3.scaleOrdinal(["#362FD9", "#1AACAC"]); // Cores para feminino e masculino
 
-        const svgContainer = d3.select("#chart-container");
+        const topRow = d3.select("#top-row");
+        const bottomRow = d3.select("#bottom-row");
 
-        cursos.forEach(curso => {
-            const svg = svgContainer.append("svg")
+        cursos.forEach((curso, index) => {
+            const svg = (index < 4 ? topRow : bottomRow).append("svg")
                 .attr("width", width)
                 .attr("height", height)
                 .append("g")
@@ -62,7 +63,10 @@ fetch(csv)
 
             svg.append("text")
                 .attr("text-anchor", "middle")
-                .attr("y", height / 2 - radius - 10)
+                .attr("y", 0) // Posiciona o texto verticalmente no centro
+                .attr("dy", "0.35em") // Ajusta o alinhamento vertical do texto
+                .style("font-size", "18px") // Tamanho da fonte ajustado
+                .style("font-weight", "bold") // Texto em negrito
                 .text(curso.nome);
         });
 
