@@ -1,5 +1,5 @@
 html, body {
-    height: 100%; /* Garante que o body ocupe toda a altura da página */
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -8,43 +8,83 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    justify-content: center;
     font-family: Fugue-Regular;
     text-align: center;
 }
 
 #title-container {
-    margin-bottom: 20px; /* Espaço abaixo do título */
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #legend {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centraliza a legenda horizontalmente */
+    align-items: center;
     margin: 20px 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 0 15px; /* Espaçamento entre os itens da legenda */
+    font-weight: bold;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    background-color: #000; /* Cor padrão, será sobrescrita pelo JS */
+    margin-right: 8px;
+    border-radius: 3px; /* Deixa os cantos levemente arredondados */
+}
+
+.legend-text {
+    font-size: 16px; /* Aumenta o tamanho da fonte para melhor legibilidade */
 }
 
 #charts-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza os blocos horizontalmente */
-    width: 100%; /* Ajusta a largura para 100% do contêiner pai */
-    max-width: 1200px; /* Define uma largura máxima para o wrapper */
-    margin: 0 auto; /* Centraliza o wrapper horizontalmente */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .chart-row {
     display: flex;
-    justify-content: center; /* Centraliza os donuts horizontalmente */
-    flex-wrap: wrap; /* Permite que os donuts se distribuam em várias linhas se necessário */
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 10px 0;
-    width: 100%; /* Ajusta a largura para 100% do contêiner pai */
+    width: 100%;
 }
 
 svg {
-    width: 250px; /* Aumenta a largura dos gráficos */
-    height: 250px; /* Aumenta a altura dos gráficos */
-    margin: 15px; /* Espaçamento entre os gráficos */
+    width: 250px;
+    height: 250px;
+    margin: 15px;
 }
+
+/* Tooltip styling */
+#tooltip {
+    position: absolute;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+
+
+
+
 
 
 

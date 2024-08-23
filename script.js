@@ -44,22 +44,23 @@ fetch(csv)
 
             arcs.append("path")
                 .attr("d", arc)
-                .attr("fill", d => colorScale(d.data.name))
-                .on("mouseover", function(event, d) {
-                    d3.select("#tooltip")
-                        .style("display", "block")
-                        .text(`${d.data.name}: ${d.data.value.toFixed(2)}%`)
-                        .style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY + 10) + "px");
-                })
-                .on("mousemove", function(event) {
-                    d3.select("#tooltip")
-                        .style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY + 10) + "px");
-                })
-                .on("mouseout", function() {
-                    d3.select("#tooltip").style("display", "none");
-                });
+                .attr("fill", d => colorScale(d.data.name));
+
+            // Adicionar interatividade ao passar o mouse sobre as fatias
+            arcs.on("mouseover", function(event, d) {
+                d3.select(this).append("text")
+                    .attr("class", "percentage-text")
+                    .attr("transform", `translate(${arc.centroid(d)})`)
+                    .attr("dy", "0.35em")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "18px")
+                    .style("fill", "black")
+                    .style("font-weight", "bold")  // Deixa a fonte em negrito
+                    .text(`${d.data.value.toFixed(2)}%`);
+            })
+            .on("mouseout", function() {
+                d3.select(this).select(".percentage-text").remove();
+            });
 
             svg.append("text")
                 .attr("text-anchor", "middle")
@@ -74,8 +75,8 @@ fetch(csv)
         const legendContainer = d3.select("#legend");
 
         const legendItems = [
-            { color: "#362FD9", label: "MULHERES" },
-            { color: "#1AACAC", label: "HOMENS" }
+            { color: "#362FD9", label: "HOMENS" },
+            { color: "#1AACAC", label: "MULHERES" }
         ];
 
         legendItems.forEach(item => {
@@ -91,6 +92,8 @@ fetch(csv)
                 .text(item.label);
         });
     });
+
+
 
 
 
