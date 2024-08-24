@@ -22,7 +22,7 @@ body {
 
 #legend {
     display: flex;
-    justify-content: center; /* Centraliza a legenda horizontalmente */
+    justify-content: center; 
     align-items: center;
     margin: 20px 0;
 }
@@ -30,20 +30,20 @@ body {
 .legend-item {
     display: flex;
     align-items: center;
-    margin: 0 15px; /* Espaçamento entre os itens da legenda */
+    margin: 0 15px; 
     font-weight: bold;
 }
 
 .legend-color {
     width: 20px;
     height: 20px;
-    background-color: #000; /* Cor padrão, será sobrescrita pelo JS */
+    background-color: #070000; 
     margin-right: 8px;
-    border-radius: 3px; /* Deixa os cantos levemente arredondados */
+    border-radius: 3px; 
 }
 
 .legend-text {
-    font-size: 16px; /* Aumenta o tamanho da fonte para melhor legibilidade */
+    font-size: 16px; 
 }
 
 #charts-wrapper {

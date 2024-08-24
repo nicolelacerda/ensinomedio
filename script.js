@@ -12,7 +12,7 @@ fetch(csv)
         const width = 250; // Largura de cada gráfico donut
         const height = 250; // Altura de cada gráfico donut
         const radius = Math.min(width, height) / 2;
-        const colorScale = d3.scaleOrdinal(["#362FD9", "#1AACAC"]); // Cores para feminino e masculino
+        const colorScale = d3.scaleOrdinal(["#362FD9", "#1AACAC"]); 
 
         const topRow = d3.select("#top-row");
         const bottomRow = d3.select("#bottom-row");
@@ -55,7 +55,7 @@ fetch(csv)
                     .style("text-anchor", "middle")
                     .style("font-size", "18px")
                     .style("fill", "black")
-                    .style("font-weight", "bold")  // Deixa a fonte em negrito
+                    .style("font-weight", "bold")  
                     .text(`${d.data.value.toFixed(2)}%`);
             })
             .on("mouseout", function() {
@@ -64,10 +64,10 @@ fetch(csv)
 
             svg.append("text")
                 .attr("text-anchor", "middle")
-                .attr("y", 0) // Posiciona o texto verticalmente no centro
-                .attr("dy", "0.35em") // Ajusta o alinhamento vertical do texto
-                .style("font-size", "18px") // Tamanho da fonte ajustado
-                .style("font-weight", "bold") // Texto em negrito
+                .attr("y", 0) 
+                .attr("dy", "0.35em") 
+                .style("font-size", "18px") 
+                .style("font-weight", "bold") 
                 .text(curso.nome);
         });
 
@@ -92,6 +92,7 @@ fetch(csv)
                 .text(item.label);
         });
     });
+
 
 
 
