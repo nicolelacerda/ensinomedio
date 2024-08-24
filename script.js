@@ -12,7 +12,7 @@ fetch(csv)
         const width = 250; // Largura de cada gráfico donut
         const height = 250; // Altura de cada gráfico donut
         const radius = Math.min(width, height) / 2;
-        const colorScale = d3.scaleOrdinal(["#362FD9", "#1AACAC"]); 
+        const colorScale = d3.scaleOrdinal(["#1AACAC","#362FD9"]); 
 
         const topRow = d3.select("#top-row");
         const bottomRow = d3.select("#bottom-row");
